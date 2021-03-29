@@ -34,7 +34,6 @@ async def yelp_query(ctx, search_text: str, location: str, n: int):
 
     else:
         place = search_results['businesses'][int(n)-1]['url']
-        #await ctx.send('You passed {} and {}'.format(search_text, n))
         await ctx.send(place)
 
 bot.run(DISCORD_TOKEN)
