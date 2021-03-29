@@ -7,12 +7,18 @@ from yelpapi import YelpAPI
 from discord.ext import commands
 from dotenv import load_dotenv
 
+# Load API keys from environment variables
 load_dotenv()
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 YELP_API_KEY = os.getenv("YELP_API_KEY")
+
+# Initialize bot and yelp API
 bot = commands.Bot(command_prefix='$')
 yelp_api = YelpAPI(YELP_API_KEY)
 
+# Define commands:
+
+# $roll_dice command
 @bot.command(name='roll_dice', help='Simulates rolling dice.')
 async def roll(ctx, number_of_dice: int, number_of_sides: int):
     dice = [
@@ -21,6 +27,7 @@ async def roll(ctx, number_of_dice: int, number_of_sides: int):
     ]
     await ctx.send(', '.join(dice))
 
+# $yelp command
 @bot.command(name='yelp', help="""Searches Yelp. Required parameters:\n
                                 search_text: text to search (put inside "" quotes if it has spaces),\n
                                 location: location (put inside "" quotes if it has spaces),\n
@@ -36,4 +43,5 @@ async def yelp_query(ctx, search_text: str, location: str, n: int):
         place = search_results['businesses'][int(n)-1]['url']
         await ctx.send(place)
 
+# Run the bot
 bot.run(DISCORD_TOKEN)
